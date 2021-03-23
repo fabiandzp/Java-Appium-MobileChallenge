@@ -1,0 +1,11 @@
+<suite name="Regression" >
+    <test name="Demo" >
+        <classes>
+            <class name="tests.Runner"/>
+        </classes>
+    </test>
+</suite>
+
+
+
+
