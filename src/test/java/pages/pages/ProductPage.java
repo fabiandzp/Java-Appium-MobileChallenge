@@ -2,18 +2,13 @@ package pages.pages;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.account.AccountMenuPage;
 
 import java.util.List;
 
-import static org.apache.logging.log4j.LogManager.getLogger;
-
 public class ProductPage extends BasePage{
-    private static final Logger log = getLogger(AccountMenuPage.class.getName());
 
     public ProductPage(AndroidDriver driver) {
         super(driver);

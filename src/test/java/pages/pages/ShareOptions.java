@@ -20,7 +20,8 @@ public class ShareOptions extends BasePage{
         super(driver);
     }
 
-    private static final By shareOptiosBtns = By.xpath("//android.widget.TextView[@resource-id='com.alibaba.aliexpresshd:id/tv_app_name']");
+    private static final By shareOptiosBtns =
+            By.xpath("//android.widget.TextView[@resource-id='com.alibaba.aliexpresshd:id/tv_app_name']");
     public String clickShareMoreOptions(){
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.presenceOfElementLocated(shareOptiosBtns));

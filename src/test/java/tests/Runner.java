@@ -1,7 +1,6 @@
 package tests;
 
 import com.aventstack.extentreports.testng.listener.ExtentITestListenerClassAdapter;
-import io.appium.java_client.android.Activity;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -16,12 +15,10 @@ import pages.settings.SettingsPage;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
 
-
 @Listeners({ExtentITestListenerClassAdapter.class})
 public class Runner extends Hooks{
 
     private static final Logger log = getLogger(Hooks.class.getName());
-
 
     @Test
     public void unsuccessfulLogin(){
@@ -47,12 +44,9 @@ public class Runner extends Hooks{
         log.info(message);
 
             SoftAssert softAssertion= new SoftAssert();
-            softAssertion.assertEquals(message, "Password is incorrect. Please try again.", "Login validation fail");
+            softAssertion.assertEquals(message,
+                    "Password is incorrect. Please try again.", "Login validation fail");
             softAssertion.assertAll();
-
-
-
-
     }
 
     @Test
@@ -73,7 +67,8 @@ public class Runner extends Hooks{
 
 
         SoftAssert softAssertion= new SoftAssert();
-        softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()), "Search validation fails");
+        softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()),
+                "Search validation fails");
         softAssertion.assertAll();
 
         log.info("Going to Home Menu");
@@ -110,7 +105,8 @@ public class Runner extends Hooks{
         String resultText = carPage.getCarResults(query);
 
         SoftAssert softAssertion= new SoftAssert();
-        softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()), "Search validation fails");
+        softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()),
+                "Search validation fails");
         softAssertion.assertAll();
 
     }
@@ -127,7 +123,8 @@ public class Runner extends Hooks{
         String resultText = carPage.getCarResults(query);
 
         SoftAssert softAssertion= new SoftAssert();
-        softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()), "Search validation fails");
+        softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()),
+                "Search validation fails");
         softAssertion.assertAll();
 
     }
@@ -151,7 +148,8 @@ public class Runner extends Hooks{
 
         log.info("Product price is -> " + priceProductValue);
         SoftAssert softAssertion= new SoftAssert();
-        softAssertion.assertNotEquals(priceProductValue, "0.00","Price product validation fails");
+        softAssertion.assertNotEquals(priceProductValue, "0.00",
+                "Price product validation fails");
         softAssertion.assertAll();
 
         log.info("Going to Home Menu");
@@ -163,7 +161,6 @@ public class Runner extends Hooks{
         homePage.homePageCheck();
 
     }
-
 
     @Test
     public void addProductToWishList(){
@@ -187,14 +184,6 @@ public class Runner extends Hooks{
         softAssertion.assertAll();
 
     }
-
-/*    @Test
-    public void SearchByImage(){
-    }*/
-
-/*    @Test
-    public void addSearchFilter(){
-    }*/
 
     @Test
     public void shareProduct(){
@@ -286,11 +275,4 @@ public class Runner extends Hooks{
         log.info("go to Main Activity");
         homePage.homePageCheck();
     }
-
-
-
-
-
-
-
 }

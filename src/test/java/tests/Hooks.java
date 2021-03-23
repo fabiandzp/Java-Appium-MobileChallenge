@@ -5,9 +5,7 @@ import io.appium.java_client.android.AndroidDriver;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import utilities.Utilities;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -65,8 +63,8 @@ public class Hooks {
     private String sauceUserName = System.getenv("SAUCE_USERNAME");
     private String sauceAccessKey = System.getenv("SAUCE_ACCESS_KEY");
     private String sauceUrl = System.getenv("SAUCE_URL");
-
     private String urlSauceLab = "https://" + sauceUserName + ":" + sauceAccessKey + sauceUrl;
+
     //@BeforeClass
     public void setupSauceLabs(){
 
@@ -77,46 +75,52 @@ public class Hooks {
             log.info("Error when reading the property file");
         }
 
-        String url = props.getProperty("url");
-        String udid = props.getProperty("udid");
-        String deviceName = props.getProperty("deviceName");
-        String platformName = props.getProperty("platformName");
-        String appPackage = props.getProperty("appPackage");
-        String appActivity = props.getProperty("appActivity");
-
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("udid", udid);
-        capabilities.setCapability("deviceName", deviceName);
-        capabilities.setCapability("platformName", platformName);
-        capabilities.setCapability("appPackage", appPackage);
-        capabilities.setCapability("appActivity", appActivity);
+        String SAUCEappiumVersion = props.getProperty("SAUCEappiumVersion");
+        String SAUCEdeviceName = props.getProperty("SAUCEdeviceName");
+        String SAUCEdeviceOrientation = props.getProperty("SAUCEdeviceOrientation");
+        String SAUCEbrowserName = props.getProperty("SAUCEbrowserName");
+        String SAUCEplatformVersion = props.getProperty("SAUCEplatformVersion");
+        String SAUCEplatformName = props.getProperty("SAUCEplatformName");
+        String SAUCEapp = props.getProperty("SAUCEapp");
+        String SACUEappPackage = props.getProperty("SAUCEappPackage");
+        String SAUCEappActivity = props.getProperty("SAUCEappActivity");
 
 
-       /* DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("appiumVersion", "1.20.2");
-        capabilities.setCapability("deviceName", "Android GoogleAPI Emulator");
-        capabilities.setCapability("deviceOrientation", "portrait");
-        capabilities.setCapability("browserName", "");
-        capabilities.setCapability("platformVersion", "9.0");
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("app", "storage:filename=Aliexpress.apk");
-        capabilities.setCapability("appPackage", appPackage);
-        capabilities.setCapability("appActivity", appActivity);*/
+        DesiredCapabilities capabilities = new DesiredCapabilities().android();
+        capabilities.setCapability("appiumVersion", SAUCEappiumVersion);
+        capabilities.setCapability("deviceName", SAUCEdeviceName);
+        capabilities.setCapability("deviceOrientation", SAUCEdeviceOrientation);
+        capabilities.setCapability("browserName", SAUCEbrowserName);
+        capabilities.setCapability("platformVersion", SAUCEplatformVersion);
+        capabilities.setCapability("platformName", SAUCEplatformName);
+        capabilities.setCapability("app", SAUCEapp);
+        capabilities.setCapability("appPackage", SACUEappPackage);
+        capabilities.setCapability("appActivity", SAUCEappActivity);
 
+        String SAUCE_USERNAME = props.getProperty("SAUCE_USERNAME");
+        String SAUCE_ACCESS_KEY = props.getProperty("SAUCE_ACCESS_KEY");
+        String SAUCE_URL = props.getProperty("SAUCE_URL");
+
+        String urlSauceLabTemp = "https://" + SAUCE_USERNAME + ":" + SAUCE_ACCESS_KEY + SAUCE_URL;
 
         try {
-            driver = new AndroidDriver(new URL(url), capabilities);
             //driver = new AndroidDriver(new URL(urlSauceLab), capabilities);
+            driver = new AndroidDriver(new URL(urlSauceLabTemp), capabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
 
-        log.info("url: " + url);
-        log.info("udid: " + udid);
-        log.info("deviceName: " + deviceName);
-        log.info("platformName: " + platformName);
-        log.info("appPackage: " + appPackage);
-        log.info("appActivity: " + appActivity);
+        log.info("url: " + SAUCE_URL);
+        //log.info("udid: " + udid);
+        log.info("SAUCEappiumVersion: " + SAUCEappiumVersion);
+        log.info("SAUCEdeviceName: " + SAUCEdeviceName);
+        log.info("SAUCEappPackage: " + SACUEappPackage);
+        log.info("SAUCEdeviceOrientation: " + SAUCEdeviceOrientation);
+        log.info("SAUCEplatformVersion: " + SAUCEplatformVersion);
+        log.info("SAUCEplatformName: " + SAUCEplatformName);
+        log.info("SAUCEapp: " + SAUCEapp);
+        log.info("SAUCEappPackage: " + SACUEappPackage);
+        log.info("SAUCEappActivity: " + SAUCEappActivity);
 
     }
 

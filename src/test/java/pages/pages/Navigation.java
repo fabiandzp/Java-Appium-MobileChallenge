@@ -21,7 +21,6 @@ public class Navigation extends BasePage {
         driver.findElement(btnAccount).click();
     }
 
-
     public void goToHomeMenu() {
         log.info("Click Home Button Menu");
         driver.findElement(btnHome).click();

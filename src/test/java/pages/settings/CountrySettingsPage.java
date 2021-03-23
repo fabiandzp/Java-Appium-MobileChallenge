@@ -46,12 +46,6 @@ public class CountrySettingsPage extends BasePage {
         log.info("List  Size " + provinceElements.size());
         provinceElements.get(0).click();
 
-        //Wait until municipality List loads and select 1
-        /*wait.until(ExpectedConditions.presenceOfElementLocated(municipalityList));
-        List<AndroidElement> municipalityElements = driver.findElements(municipalityList);
-        log.info("List  Size " + municipalityElements.size());
-        municipalityElements.get(0).click();*/
-
         return newCountry;
     }
 

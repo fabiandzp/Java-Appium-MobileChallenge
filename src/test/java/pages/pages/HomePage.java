@@ -3,7 +3,6 @@ package pages.pages;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -32,9 +31,7 @@ public class HomePage extends BasePage {
         driver.findElement(searchBtn).click();
 
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(resultList));
-
     }
-
 
     private static final By homeContainer = By.id("com.alibaba.aliexpresshd:id/pull_refreshlayout");
     public void homePageCheck(){
