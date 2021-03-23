@@ -9,14 +9,11 @@ import pages.account.AccountMenuPage;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
 
-public class TopDotMenu extends BasePage{
+public class TopMenu extends BasePage{
     private static final Logger log = getLogger(AccountMenuPage.class.getName());
 
 
-
-
-
-    public TopDotMenu(AndroidDriver driver) {
+    public TopMenu(AndroidDriver driver) {
         super(driver);
     }
 
@@ -26,14 +23,34 @@ public class TopDotMenu extends BasePage{
         driver.findElement(dotMenuBtn).click();
     }
 
-    private static final By dotSettingsBtn = By.xpath("//android.widget.TextView[@text='Settings']");
+    private static final By topCarBtn = By.id("com.alibaba.aliexpresshd:id/menu_shopcart");
+    public void getCarMenu(){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(topCarBtn));
+        log.info("Clicking Dot Menu");
+        driver.findElement(topCarBtn).click();
+    }
+
+    private static final By topHomeBtn = By.xpath("//android.widget.TextView[@text='Home']");
+    public void getHomeMenu(){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(topHomeBtn));
+        log.info("Clicking Dot Menu");
+        driver.findElement(topHomeBtn).click();
+    }
+
+
+
+    /*private static final By dotSettingsBtn = By.xpath("//android.widget.TextView[@text='Settings']");
     private static final By dotCarBtn = By.xpath("//android.widget.TextView[@text='Cart']");
     public void goToCarMenu(){
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.presenceOfElementLocated(dotSettingsBtn));
         log.info("Clicking Cart Menu");
         driver.findElement(dotCarBtn).click();
-    }
+    }*/
+
+
 
 
 

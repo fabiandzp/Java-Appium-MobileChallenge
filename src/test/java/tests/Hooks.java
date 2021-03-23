@@ -3,6 +3,7 @@ package tests;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class Hooks {
 
     }*/
 
-    @BeforeMethod
+    @BeforeClass
     public void setup(){
 
         Properties props = new Properties();
@@ -59,8 +60,6 @@ public class Hooks {
         log.info("platformName: " + platformName);
         log.info("appPackage: " + appPackage);
         log.info("appActivity: " + appActivity);
-
-
 
     }
 

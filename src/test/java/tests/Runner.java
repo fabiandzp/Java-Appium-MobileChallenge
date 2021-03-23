@@ -1,13 +1,13 @@
 package tests;
 
+import io.appium.java_client.android.Activity;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 import pages.account.AccountMenuPage;
 import pages.account.AccountPage;
 import pages.account.SignInPage;
-import pages.pages.HomePage;
-import pages.pages.Navigation;
-import pages.pages.ResultsPage;
+import pages.pages.*;
 import pages.settings.CountrySettingsPage;
 import pages.settings.CurrencySettingsPage;
 import pages.settings.SettingsPage;
@@ -37,9 +37,14 @@ public class Runner extends Hooks{
         log.info("Sending username/password and Click LogIn");
         SignInPage signInPage = new SignInPage(driver);
         String message = signInPage.login();
+        log.info(message);
 
-        assertThat("Login validation fail", message,
-                equalTo("Password is incorrect. Please try again."));
+        SoftAssert softAssertion= new SoftAssert();
+        softAssertion.assertEquals(message, "Password is incorrect. Please try again.", "Login validation fail");
+        softAssertion.assertAll();
+
+        driver.startActivity(new Activity("com.alibaba.aliexpresshd", "com.alibaba.aliexpresshd.home.ui.MainActivity"));
+
     }
 
     @Test
@@ -58,50 +63,105 @@ public class Runner extends Hooks{
         ResultsPage resultsPage = new ResultsPage(driver);
         String resultText = resultsPage.getResultsList(query);
 
-        assertThat("Search validation fails", resultText.toUpperCase(),
-                containsString(query.toUpperCase()));
 
+        SoftAssert softAssertion= new SoftAssert();
+        softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()), "Search validation fails");
+        softAssertion.assertAll();
+
+        log.info("Going to Home Menu");
+        TopMenu topMenu = new TopMenu(driver);
+        topMenu.getDotMenu();
+        topMenu.getHomeMenu();
+
+        log.info("Main Menu Validation");
+        homePage.homePageCheck();
+    }
+
+/*    @Test
+    public void goHome(){
+        log.info("Clicking Home menu");
+        Navigation navigation = new Navigation(driver);
+        navigation.goToHomeMenu();
+
+        log.info("Sending Query");
+        HomePage homePage = new HomePage(driver);
+        String query = "rubik";
+        homePage.searchItem(query);
+
+        //Getting Results
+        log.info("Getting Results");
+        ResultsPage resultsPage = new ResultsPage(driver);
+        String resultText = resultsPage.getResultsList(query);
+        driver.startActivity(new Activity("com.alibaba.aliexpresshd", "com.alibaba.aliexpresshd.home.ui.MainActivity"));
+    }*/
+
+    @Test
+    public void AddProductToCar(){
+        log.info("Sending Query");
+        HomePage homePage = new HomePage(driver);
+        String query = "rubik";
+        homePage.searchItem(query);
+
+        log.info("Getting the Product");
+        ResultsPage resultsPage = new ResultsPage(driver);
+        String product = resultsPage.gettingProduct();
+        log.info("PRODUCT TITLE -> " + product);
+
+        log.info("Adding Product to the Car");
+        ProductPage productPage = new ProductPage(driver);
+        productPage.addProductToCar();
+
+        log.info("Go to Car Top menu");
+        TopMenu topMenu = new TopMenu(driver);
+        topMenu.getCarMenu();
+
+        log.info("Going to car Page");
+        CarPage carPage= new CarPage(driver);
+        String resultText = carPage.getCarResults(query);
+
+
+        SoftAssert softAssertion= new SoftAssert();
+        softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()), "Search validation fails");
+        softAssertion.assertAll();
+
+        driver.startActivity(new Activity("com.alibaba.aliexpresshd", "com.alibaba.aliexpresshd.home.ui.MainActivity"));
     }
 
     @Test
     public void verifyAddedProducts(){
-        log.info("Clicking Home menu");
+        log.info("Verify Product Added to the Car");
         Navigation navigation = new Navigation(driver);
-        navigation.goToHomeMenu();
+        navigation.goToCarMenu();
+        String query = "rubik";
 
+        log.info("Going to car Page");
+        CarPage carPage= new CarPage(driver);
+        String resultText = carPage.getCarResults(query);
+
+        SoftAssert softAssertion= new SoftAssert();
+        softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()), "Search validation fails");
+        softAssertion.assertAll();
+
+        driver.startActivity(new Activity("com.alibaba.aliexpresshd", "com.alibaba.aliexpresshd.home.ui.MainActivity"));
     }
 
+    /*
     @Test
     public void addProductToWishList(){
-        log.info("Clicking Home menu");
-        Navigation navigation = new Navigation(driver);
-        navigation.goToHomeMenu();
 
-    }
+    }*/
 
-    @Test
+/*    @Test
     public void SearchByImage(){
-        log.info("Clicking Home menu");
-        Navigation navigation = new Navigation(driver);
-        navigation.goToHomeMenu();
+    }*/
 
-    }
-
-    @Test
+/*    @Test
     public void addSearchFilter(){
-        log.info("Clicking Home menu");
-        Navigation navigation = new Navigation(driver);
-        navigation.goToHomeMenu();
+    }*/
 
-    }
-
-    @Test
+/*    @Test
     public void shareProduct(){
-        log.info("Clicking Home menu");
-        Navigation navigation = new Navigation(driver);
-        navigation.goToHomeMenu();
-
-    }
+    }*/
 
     @Test
     public void changeShippingCountry(){
@@ -126,8 +186,13 @@ public class Runner extends Hooks{
         String newCountry = countrySettingsPage.setCountry();
         log.info("NEW Country Set >>> "+ newCountry);
 
-        assertThat("Country validation fails", newCountry,
-                not(equalTo(actualCountry)));
+        SoftAssert softAssertion= new SoftAssert();
+        softAssertion.assertNotEquals(newCountry, actualCountry,"Search validation fails");
+        softAssertion.assertAll();
+
+        log.info("go to Main Activity");
+        HomePage homePage = new HomePage(driver);
+        homePage.homePageCheck();
     }
     
     @Test
@@ -151,19 +216,18 @@ public class Runner extends Hooks{
         log.info("Set new Currency");
         String newCcy = currencySettingsPage.setCurrency();
 
-        assertThat("Currency validation fails", newCcy,
-                not(equalTo(actualCcy)));
+        SoftAssert softAssertion= new SoftAssert();
+        softAssertion.assertNotEquals(newCcy, actualCcy,"Search validation fails");
+        softAssertion.assertAll();
+
+        log.info("go to Main Activity");
+        HomePage homePage = new HomePage(driver);
+        homePage.homePageCheck();
     }
 
-    @Test
+/*    @Test
     public void verifyPriceProduct(){
-        log.info("Clicking Home menu");
-        Navigation navigation = new Navigation(driver);
-        navigation.goToHomeMenu();
-
-
-
-    }
+    }*/
 
 
 

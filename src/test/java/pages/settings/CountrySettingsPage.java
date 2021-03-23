@@ -34,9 +34,9 @@ public class CountrySettingsPage extends BasePage {
         //Select the new country
         List<AndroidElement> list = driver.findElements(countryList);
         log.info("List Country Size " + list.size());
-        int i = list.size();
-        String newCountry = list.get(i-1).getText();
-        list.get(i-1).click();
+        //int i = list.size();
+        String newCountry = list.get(3).getText();
+        list.get(3).click();
 
         log.info("Country Selected -> " + newCountry);
 
@@ -47,10 +47,10 @@ public class CountrySettingsPage extends BasePage {
         provinceElements.get(0).click();
 
         //Wait until municipality List loads and select 1
-        wait.until(ExpectedConditions.presenceOfElementLocated(municipalityList));
+        /*wait.until(ExpectedConditions.presenceOfElementLocated(municipalityList));
         List<AndroidElement> municipalityElements = driver.findElements(municipalityList);
         log.info("List  Size " + municipalityElements.size());
-        municipalityElements.get(0).click();
+        municipalityElements.get(0).click();*/
 
         return newCountry;
     }

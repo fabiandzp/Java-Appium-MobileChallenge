@@ -28,4 +28,11 @@ public class HomePage extends BasePage {
         driver.findElement(realSearchBar).sendKeys(query);
         driver.findElement(searchBtn).click();
     }
+
+
+    private static final By homeContainer = By.id("com.alibaba.aliexpresshd:id/pull_refreshlayout");
+    public void homePageCheck(){
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(homeContainer));
+    }
 }

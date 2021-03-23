@@ -18,14 +18,13 @@ public class ResultsPage extends BasePage {
         super(driver);
     }
 
-    private static final By resultListContent = By.id("com.alibaba.aliexpresshd:id/search_result_list");
+    private static final By resultListContainer = By.id("com.alibaba.aliexpresshd:id/search_result_list");
     private static final By resultList =
             By.xpath("//android.widget.TextView[@resource-id='com.alibaba.aliexpresshd:id/tv_product_list_tagged_title']");
     public String getResultsList(String query){
         WebDriverWait wait = new WebDriverWait(driver, 20);
-        wait.until(ExpectedConditions.presenceOfElementLocated(resultListContent));
+        wait.until(ExpectedConditions.presenceOfElementLocated(resultListContainer));
 
-        //Select the new country
         List<AndroidElement> list = driver.findElements(resultList);
         log.info("List Country Size " + list.size());
         int numberOfItems = list.size();
@@ -42,5 +41,21 @@ public class ResultsPage extends BasePage {
         log.info("Result item contains the following text -> " + resultItemText);
         return resultItemText;
 
+    }
+
+    private static final By product =
+            By.xpath("//android.widget.TextView[@resource-id='com.alibaba.aliexpresshd:id/tv_product_list_tagged_title']");
+    public String gettingProduct() {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(resultListContainer));
+
+        log.info("Getting the Product List");
+        List<AndroidElement> list = driver.findElements(product);
+        log.info("List elements Size " + list.size());
+        String productText = list.get(0).getText();
+        log.info("Going to Product Page");
+        list.get(0).click();
+
+        return productText;
     }
 }
