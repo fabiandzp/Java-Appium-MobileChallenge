@@ -58,4 +58,26 @@ public class ResultsPage extends BasePage {
 
         return productText;
     }
+
+    private static final By productDotsMenuList =
+            By.xpath("//android.widget.RelativeLayout[@resource-id='com.alibaba.aliexpresshd:id/mod_search_item_more_container']");
+    public void prodcutDotsMenu() {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(resultListContainer));
+
+        log.info("Click Open Product Dots Menus");
+        List<AndroidElement> list = driver.findElements(productDotsMenuList);
+        log.info("List elements Size " + list.size());
+        list.get(0).click();
+    }
+
+    private static final By dotsMenuOptions = By.id("com.alibaba.aliexpresshd:id/m_search_operate");
+    private static final By wishListBtn = By.id("com.alibaba.aliexpresshd:id/m_search_preview_action_add_wish");
+    public void addingProductToWishList(){
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(dotsMenuOptions));
+        log.info("Adding the product to the wish List");
+        driver.findElement(wishListBtn).click();
+    }
+
 }

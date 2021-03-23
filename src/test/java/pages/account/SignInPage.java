@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.pages.BasePage;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import static org.apache.logging.log4j.LogManager.getLogger;
 
 public class SignInPage extends BasePage {
@@ -27,8 +29,10 @@ public class SignInPage extends BasePage {
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.presenceOfElementLocated(registerLink));
 
-        driver.findElement(email).sendKeys("test86@gmail.com");
-        driver.findElement(password).sendKeys("password123.!");
+
+        int int_random = ThreadLocalRandom.current().nextInt();
+        driver.findElement(email).sendKeys(int_random + "mail@gmail.com");
+        driver.findElement(password).sendKeys("PWD" + int_random);
         driver.findElement(signInBtn).click();
 
 

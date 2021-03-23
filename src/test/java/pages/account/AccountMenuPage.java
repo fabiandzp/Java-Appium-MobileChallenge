@@ -20,6 +20,8 @@ public class AccountMenuPage extends BasePage {
 
     public static final By singInLinkBtn = By.id("tv_un_login");
     public void goToRegisterLoginPage(){
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(singInLinkBtn));
         log.info("Clicking Sing In Button");
         driver.findElement(singInLinkBtn).click();
     }

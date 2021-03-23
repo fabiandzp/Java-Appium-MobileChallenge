@@ -16,6 +16,18 @@ public class AccountPage extends BasePage {
         super(driver);
     }
 
+    private static final By container = By.id("com.alibaba.aliexpresshd:id/scroll_sns_container");
+    public boolean checkRegisterLogInPage() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(container));
+
+        boolean userNotLogged = false;
+        if (driver.findElement(container).isDisplayed()){
+            userNotLogged = true;
+        }
+
+        return userNotLogged;
+    }
 
     private static final By SignInBtn = By.id("btn_sign_in");
     public void goToLoginPage(){

@@ -25,34 +25,27 @@ public class TopMenu extends BasePage{
 
     private static final By topCarBtn = By.id("com.alibaba.aliexpresshd:id/menu_shopcart");
     public void getCarMenu(){
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.presenceOfElementLocated(topCarBtn));
-        log.info("Clicking Dot Menu");
+        log.info("Clicking Car Menu");
         driver.findElement(topCarBtn).click();
     }
 
     private static final By topHomeBtn = By.xpath("//android.widget.TextView[@text='Home']");
     public void getHomeMenu(){
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.presenceOfElementLocated(topHomeBtn));
-        log.info("Clicking Dot Menu");
+        log.info("Clicking Home Menu");
         driver.findElement(topHomeBtn).click();
     }
 
-
-
-    /*private static final By dotSettingsBtn = By.xpath("//android.widget.TextView[@text='Settings']");
-    private static final By dotCarBtn = By.xpath("//android.widget.TextView[@text='Cart']");
-    public void goToCarMenu(){
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfElementLocated(dotSettingsBtn));
-        log.info("Clicking Cart Menu");
-        driver.findElement(dotCarBtn).click();
-    }*/
-
-
-
-
+    private static final By topShareBtn = By.id("com.alibaba.aliexpresshd:id/menu_wish_list_group_share");
+    public void getShareMenu() {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(topShareBtn));
+        log.info("Clicking Share Menu");
+        driver.findElement(topShareBtn).click();
+    }
 
 
 }

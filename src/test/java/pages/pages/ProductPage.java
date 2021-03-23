@@ -26,6 +26,7 @@ public class ProductPage extends BasePage{
     private static final By shippingDetails = By.id("com.alibaba.aliexpresshd:id/ll_shipping_layout_v2");
     private static final By option1Checked = By.xpath("//android.widget.CompoundButton[@checked='true']");
 
+
     public void addProductToCar() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.presenceOfElementLocated(BuyNowBtn));
@@ -42,6 +43,16 @@ public class ProductPage extends BasePage{
             wait.until(ExpectedConditions.presenceOfElementLocated(option1Checked));
             driver.findElement(continueBtn).click();
         }
+
+    }
+
+    private static final By productPrice = By.id("com.alibaba.aliexpresshd:id/tv_product_price");
+    public String checkProductPrice() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.presenceOfElementLocated(BuyNowBtn));
+
+        String value = driver.findElement(productPrice).getText();
+        return value;
 
     }
 }

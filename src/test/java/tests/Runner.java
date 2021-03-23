@@ -1,7 +1,9 @@
 package tests;
 
+import com.aventstack.extentreports.testng.listener.ExtentITestListenerClassAdapter;
 import io.appium.java_client.android.Activity;
 import org.apache.logging.log4j.Logger;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.account.AccountMenuPage;
@@ -13,15 +15,20 @@ import pages.settings.CurrencySettingsPage;
 import pages.settings.SettingsPage;
 
 import static org.apache.logging.log4j.LogManager.getLogger;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
+
+@Listeners({ExtentITestListenerClassAdapter.class})
 public class Runner extends Hooks{
 
     private static final Logger log = getLogger(Hooks.class.getName());
 
+
     @Test
     public void unsuccessfulLogin(){
+        log.info("Main Menu Validation");
+        HomePage homePage = new HomePage(driver);
+        homePage.homePageCheck();
+
         log.info("Clicking pages.account menu");
         Navigation navigation = new Navigation(driver);
         navigation.goToAccountMenu();
@@ -39,11 +46,12 @@ public class Runner extends Hooks{
         String message = signInPage.login();
         log.info(message);
 
-        SoftAssert softAssertion= new SoftAssert();
-        softAssertion.assertEquals(message, "Password is incorrect. Please try again.", "Login validation fail");
-        softAssertion.assertAll();
+            SoftAssert softAssertion= new SoftAssert();
+            softAssertion.assertEquals(message, "Password is incorrect. Please try again.", "Login validation fail");
+            softAssertion.assertAll();
 
-        driver.startActivity(new Activity("com.alibaba.aliexpresshd", "com.alibaba.aliexpresshd.home.ui.MainActivity"));
+
+
 
     }
 
@@ -77,24 +85,6 @@ public class Runner extends Hooks{
         homePage.homePageCheck();
     }
 
-/*    @Test
-    public void goHome(){
-        log.info("Clicking Home menu");
-        Navigation navigation = new Navigation(driver);
-        navigation.goToHomeMenu();
-
-        log.info("Sending Query");
-        HomePage homePage = new HomePage(driver);
-        String query = "rubik";
-        homePage.searchItem(query);
-
-        //Getting Results
-        log.info("Getting Results");
-        ResultsPage resultsPage = new ResultsPage(driver);
-        String resultText = resultsPage.getResultsList(query);
-        driver.startActivity(new Activity("com.alibaba.aliexpresshd", "com.alibaba.aliexpresshd.home.ui.MainActivity"));
-    }*/
-
     @Test
     public void AddProductToCar(){
         log.info("Sending Query");
@@ -119,12 +109,10 @@ public class Runner extends Hooks{
         CarPage carPage= new CarPage(driver);
         String resultText = carPage.getCarResults(query);
 
-
         SoftAssert softAssertion= new SoftAssert();
         softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()), "Search validation fails");
         softAssertion.assertAll();
 
-        driver.startActivity(new Activity("com.alibaba.aliexpresshd", "com.alibaba.aliexpresshd.home.ui.MainActivity"));
     }
 
     @Test
@@ -142,14 +130,63 @@ public class Runner extends Hooks{
         softAssertion.assertTrue(resultText.toUpperCase().contains(query.toUpperCase()), "Search validation fails");
         softAssertion.assertAll();
 
-        driver.startActivity(new Activity("com.alibaba.aliexpresshd", "com.alibaba.aliexpresshd.home.ui.MainActivity"));
     }
 
-    /*
+    @Test
+    public void verifyPriceProduct(){
+        log.info("Sending Query");
+        HomePage homePage = new HomePage(driver);
+        String query = "rubik";
+        homePage.searchItem(query);
+
+        log.info("Getting the Product");
+        ResultsPage resultsPage = new ResultsPage(driver);
+        String product = resultsPage.gettingProduct();
+        log.info("PRODUCT TITLE -> " + product);
+
+        log.info("Adding Product to the Car");
+        ProductPage productPage = new ProductPage(driver);
+        String priceProductValue = productPage.checkProductPrice();
+
+
+        log.info("Product price is -> " + priceProductValue);
+        SoftAssert softAssertion= new SoftAssert();
+        softAssertion.assertNotEquals(priceProductValue, "0.00","Price product validation fails");
+        softAssertion.assertAll();
+
+        log.info("Going to Home Menu");
+        TopMenu topMenu = new TopMenu(driver);
+        topMenu.getDotMenu();
+        topMenu.getHomeMenu();
+
+        log.info("Main Menu Validation");
+        homePage.homePageCheck();
+
+    }
+
+
     @Test
     public void addProductToWishList(){
+        log.info("Sending Query");
+        HomePage homePage = new HomePage(driver);
+        String query = "rubik";
+        homePage.searchItem(query);
 
-    }*/
+        log.info("Clicking Product 3 Dots Menu");
+        ResultsPage resultsPage = new ResultsPage(driver);
+        resultsPage.prodcutDotsMenu();
+        resultsPage.addingProductToWishList();
+
+        log.info("LogIn Pre-Requisite Validation");
+
+        AccountPage accountPage = new AccountPage(driver);
+        boolean userNotLogged = accountPage.checkRegisterLogInPage();
+
+        SoftAssert softAssertion= new SoftAssert();
+        softAssertion.assertFalse(userNotLogged, "User must Be Logged");
+        softAssertion.assertAll();
+
+    }
 
 /*    @Test
     public void SearchByImage(){
@@ -159,9 +196,31 @@ public class Runner extends Hooks{
     public void addSearchFilter(){
     }*/
 
-/*    @Test
+    @Test
     public void shareProduct(){
-    }*/
+        log.info("Sending Query");
+        HomePage homePage = new HomePage(driver);
+        String query = "rubik";
+        homePage.searchItem(query);
+
+        log.info("Getting the Product");
+        ResultsPage resultsPage = new ResultsPage(driver);
+        String product = resultsPage.gettingProduct();
+        log.info("PRODUCT TITLE -> " + product);
+
+
+        log.info("Top Dots Menu");
+        TopMenu topMenu = new TopMenu(driver);
+        topMenu.getShareMenu();
+
+        log.info("Share Options");
+        ShareOptions shareOptions = new ShareOptions(driver);
+        String shareLink = shareOptions.clickShareMoreOptions();
+
+        SoftAssert softAssertion= new SoftAssert();
+        softAssertion.assertNotNull(shareLink, "Link use not generated");
+        softAssertion.assertAll();
+    }
 
     @Test
     public void changeShippingCountry(){
@@ -197,6 +256,10 @@ public class Runner extends Hooks{
     
     @Test
     public void changeCurrency(){
+        log.info("go to Main Activity");
+        HomePage homePage = new HomePage(driver);
+        homePage.homePageCheck();
+
         log.info("Clicking Home menu");
         Navigation navigation = new Navigation(driver);
         navigation.goToAccountMenu();
@@ -221,13 +284,11 @@ public class Runner extends Hooks{
         softAssertion.assertAll();
 
         log.info("go to Main Activity");
-        HomePage homePage = new HomePage(driver);
         homePage.homePageCheck();
     }
 
-/*    @Test
-    public void verifyPriceProduct(){
-    }*/
+
+
 
 
 

@@ -23,7 +23,7 @@ public class CarPage extends BasePage{
     private static final By carResultList = By.id("com.alibaba.aliexpresshd:id/tv_product_title");
     public String getCarResults(String query){
 
-        WebDriverWait wait = new WebDriverWait(driver, 15);
+        WebDriverWait wait = new WebDriverWait(driver, 20);
 
         try {
             wait.until(ExpectedConditions.presenceOfElementLocated(goItBanner));
