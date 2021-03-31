@@ -21,6 +21,7 @@ public class ProductPage extends BasePage{
     private static final By shippingDetails = By.id("com.alibaba.aliexpresshd:id/ll_shipping_layout_v2");
     private static final By option1Checked = By.xpath("//android.widget.CompoundButton[@checked='true']");
 
+    public ShareOptions shareOptionsPoUp = new ShareOptions(driver);
 
     public void addProductToCar() {
         WebDriverWait wait = new WebDriverWait(driver, 30);

@@ -82,6 +82,7 @@ public class Runner extends Hooks{
 
     @Test
     public void AddProductToCar(){
+
         log.info("Sending Query");
         HomePage homePage = new HomePage(driver);
         String query = "rubik";

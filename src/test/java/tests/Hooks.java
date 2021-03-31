@@ -20,7 +20,7 @@ public class Hooks {
     private static final Logger log = getLogger(Hooks.class.getName());
     protected AndroidDriver driver;
 
-    @BeforeClass
+    //@BeforeClass
     public void setup(){
 
         Properties props = new Properties();
@@ -65,7 +65,7 @@ public class Hooks {
     private String sauceUrl = System.getenv("SAUCE_URL");
     private String urlSauceLab = "https://" + sauceUserName + ":" + sauceAccessKey + sauceUrl;
 
-    //@BeforeClass
+    @BeforeClass
     public void setupSauceLabs(){
 
         Properties props = new Properties();
@@ -86,6 +86,7 @@ public class Hooks {
         String SAUCEappActivity = props.getProperty("SAUCEappActivity");
 
 
+
         DesiredCapabilities capabilities = new DesiredCapabilities().android();
         capabilities.setCapability("appiumVersion", SAUCEappiumVersion);
         capabilities.setCapability("deviceName", SAUCEdeviceName);
@@ -96,6 +97,7 @@ public class Hooks {
         capabilities.setCapability("app", SAUCEapp);
         capabilities.setCapability("appPackage", SACUEappPackage);
         capabilities.setCapability("appActivity", SAUCEappActivity);
+        capabilities.setCapability("commandTimeout", 600);
 
         String SAUCE_USERNAME = props.getProperty("SAUCE_USERNAME");
         String SAUCE_ACCESS_KEY = props.getProperty("SAUCE_ACCESS_KEY");
